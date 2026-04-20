@@ -67,11 +67,10 @@ class FeedScreen extends StatelessWidget {
                     ? () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) =>
-                                  EditPostScreen(post: posts[i])),
+                              builder: (_) => EditPostScreen(post: posts[i])),
                         )
                     : null,
-                onDelete: auth.user?.id == posts[i].authorId
+                onDelete: (auth.user?.id == posts[i].authorId || auth.isAdmin)
                     ? () => _confirmDelete(context, feed, posts[i])
                     : null,
               ),
