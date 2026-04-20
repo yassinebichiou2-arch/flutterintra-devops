@@ -21,9 +21,29 @@ class ChatListScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Messages')),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const Text('Messages'),
+            if (auth.isAdmin) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: const Text('Admin',
+                    style: TextStyle(fontSize: 11, color: Colors.orange)),
+              ),
+            ],
+          ],
+        ),
+      ),
       body: StreamBuilder<List<ConversationModel>>(
-        stream: chat.getConversations(auth.user!.id),
+        stream: auth.isAdmin
+            ? chat.getAllConversations()
+            : chat.getConversations(auth.user!.id),
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -46,26 +66,39 @@ class ChatListScreen extends StatelessWidget {
             itemCount: convs.length,
             itemBuilder: (_, i) {
               final conv = convs[i];
-              final otherIdx =
-                  conv.participants.indexOf(auth.user!.id) == 0 ? 1 : 0;
-              final otherName = conv.participantNames.length > otherIdx
-                  ? conv.participantNames[otherIdx]
-                  : 'Unknown';
+              // For admin: show both participants
+              // For user: show the other participant
+              final isAdmin = auth.isAdmin;
+              final myIdx = conv.participants.indexOf(auth.user!.id);
+              final otherIdx = myIdx == 0 ? 1 : 0;
+
+              final displayName = isAdmin
+                  ? conv.participantNames.join(' ↔ ')
+                  : (conv.participantNames.length > otherIdx
+                      ? conv.participantNames[otherIdx]
+                      : 'Unknown');
+
               final otherId = conv.participants.length > otherIdx
                   ? conv.participants[otherIdx]
-                  : '';
+                  : conv.participants.first;
+
               final unread = conv.unreadCount[auth.user!.id] ?? 0;
 
               return ListTile(
-                leading: FutureBuilder(
-                  future: context.read<UserProvider>().getUser(otherId),
-                  builder: (_, snap) => UserAvatar(
-                    photoUrl: snap.data?.photoUrl,
-                    name: otherName,
-                    radius: 22,
-                  ),
-                ),
-                title: Text(otherName,
+                leading: isAdmin
+                    ? CircleAvatar(
+                        backgroundColor: Colors.orange.withValues(alpha: 0.15),
+                        child: const Icon(Icons.chat, color: Colors.orange),
+                      )
+                    : FutureBuilder(
+                        future: context.read<UserProvider>().getUser(otherId),
+                        builder: (_, snap) => UserAvatar(
+                          photoUrl: snap.data?.photoUrl,
+                          name: displayName,
+                          radius: 22,
+                        ),
+                      ),
+                title: Text(displayName,
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text(
                   conv.lastMessage.isEmpty ? 'No messages' : conv.lastMessage,
@@ -77,7 +110,8 @@ class ChatListScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(timeago.format(conv.lastMessageAt),
-                        style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                        style:
+                            const TextStyle(fontSize: 11, color: Colors.grey)),
                     if (unread > 0)
                       Container(
                         margin: const EdgeInsets.only(top: 4),
@@ -99,7 +133,7 @@ class ChatListScreen extends StatelessWidget {
                     builder: (_) => ChatDetailScreen(
                       conversationId: conv.id,
                       otherUserId: otherId,
-                      otherUserName: otherName,
+                      otherUserName: displayName,
                     ),
                   ),
                 ),
@@ -109,14 +143,10 @@ class ChatListScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const NewChatScreen())),
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (_) => const NewChatScreen())),
         child: const Icon(Icons.edit),
       ),
     );
   }
 }
-
-
-
-
