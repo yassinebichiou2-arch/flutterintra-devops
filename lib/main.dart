@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
-import 'services/notification_service.dart';
-import 'utils/seed_data.dart';
 import 'providers/chat_provider.dart';
 import 'providers/feed_provider.dart';
 import 'providers/group_provider.dart';
@@ -21,11 +19,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // ignore: avoid_print
-  print('✅ Firebase connecté au projet: ${Firebase.app().options.projectId}');
-  await NotificationService.init();
-  // Uncomment line below ONCE to create test accounts, then comment it back
-  await seedTestData();
   runApp(const FlutterIntraApp());
 }
 
@@ -68,19 +61,25 @@ class _AuthGate extends StatefulWidget {
 }
 
 class _AuthGateState extends State<_AuthGate> {
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((user) {
+    // Listen to Firebase auth state changes
+    FirebaseAuth.instance.authStateChanges().listen((user) async {
       if (user != null) {
-        widget.authProv.loadUser(user.uid);
+        await widget.authProv.loadUser(user.uid);
+      } else {
+        widget.authProv.setUserPublic(null);
       }
+      if (mounted) setState(() => _initialized = true);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.authProv.loading) {
+    if (!_initialized) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
@@ -90,7 +89,3 @@ class _AuthGateState extends State<_AuthGate> {
         : const LoginScreen();
   }
 }
-
-
-
-
