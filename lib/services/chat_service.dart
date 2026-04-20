@@ -32,6 +32,17 @@ class ChatService {
   }
 
   // Uses simple query — no composite index needed
+  // Admin: get all conversations
+  Stream<List<ConversationModel>> getAllConversations() {
+    return _db
+        .collection('conversations')
+        .orderBy('lastMessageAt', descending: true)
+        .snapshots()
+        .map((s) => s.docs
+            .map((d) => ConversationModel.fromMap(d.data(), d.id))
+            .toList());
+  }
+
   Stream<List<ConversationModel>> getConversations(String userId) {
     return _db
         .collection('conversations')
