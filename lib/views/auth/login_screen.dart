@@ -31,17 +31,19 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailCtrl.text.trim(),
       password: _passCtrl.text,
     );
-    if (!ok && mounted) {
+    if (!mounted) return;
+    if (!ok) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(auth.error ?? 'Login failed'),
           backgroundColor: AppTheme.error,
           behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10)),
         ),
       );
     }
+    // Navigation handled automatically by _AuthGate
   }
 
   @override
