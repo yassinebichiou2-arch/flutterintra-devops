@@ -22,8 +22,9 @@ class GroupDetailScreen extends StatelessWidget {
     final feed = context.read<FeedProvider>();
     final isMember =
         auth.user != null && group.members.contains(auth.user!.id);
-    final isAdmin = auth.user?.id == group.adminId;
-    final canSee = !group.isPrivate || isMember;
+    final isGroupAdmin = auth.user?.id == group.adminId;
+    final isAppAdmin = auth.isAdmin;
+    final canSee = !group.isPrivate || isMember || isAppAdmin;
 
     return Scaffold(
       body: CustomScrollView(
@@ -45,7 +46,7 @@ class GroupDetailScreen extends StatelessWidget {
                     ),
             ),
             actions: [
-              if (isMember)
+              if (isMember || isAppAdmin)
                 IconButton(
                   icon: const Icon(Icons.chat),
                   onPressed: () => Navigator.push(
@@ -82,7 +83,7 @@ class GroupDetailScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  if (auth.user != null && !isAdmin)
+                  if (auth.user != null && !isGroupAdmin && !isAppAdmin)
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
@@ -138,7 +139,7 @@ class GroupDetailScreen extends StatelessWidget {
                                         EditPostScreen(post: posts[i])),
                               )
                           : null,
-                      onDelete: auth.user?.id == posts[i].authorId
+                      onDelete: (auth.user?.id == posts[i].authorId || isAppAdmin)
                           ? () => feed.deletePost(posts[i].id)
                           : null,
                     ),
@@ -149,7 +150,7 @@ class GroupDetailScreen extends StatelessWidget {
             ),
         ],
       ),
-      floatingActionButton: isMember
+      floatingActionButton: (isMember || isAppAdmin)
           ? FloatingActionButton(
               onPressed: () => Navigator.push(
                 context,
