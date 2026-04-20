@@ -31,4 +31,10 @@ class UserService {
     final snap = await _db.collection('users').get();
     return snap.docs.map((d) => UserModel.fromMap(d.data(), d.id)).toList();
   }
+
+  Future<void> updateUserRole(String uid, String role) =>
+      _db.collection('users').doc(uid).update({'role': role});
+
+  Future<void> deleteUser(String uid) =>
+      _db.collection('users').doc(uid).delete();
 }
