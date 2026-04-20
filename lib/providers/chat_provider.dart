@@ -8,6 +8,9 @@ class ChatProvider extends ChangeNotifier {
   final ChatService _chatService = ChatService();
   final StorageService _storageService = StorageService();
 
+  Stream<List<ConversationModel>> getAllConversations() =>
+      _chatService.getAllConversations();
+
   Stream<List<ConversationModel>> getConversations(String userId) =>
       _chatService.getConversations(userId);
 
