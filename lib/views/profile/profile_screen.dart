@@ -8,6 +8,7 @@ import '../../providers/user_provider.dart';
 import '../../utils/theme_provider.dart';
 import '../../widgets/post_card.dart';
 import '../../widgets/user_avatar.dart';
+import '../admin/admin_panel_screen.dart';
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -48,6 +49,7 @@ class _ProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = context.watch<AppAuthProvider>();
     final feed = context.read<FeedProvider>();
     final themeProv = context.watch<ThemeProvider>();
 
@@ -61,6 +63,16 @@ class _ProfileBody extends StatelessWidget {
                   themeProv.isDark ? Icons.light_mode : Icons.dark_mode),
               onPressed: themeProv.toggle,
             ),
+            if (auth.isAdmin)
+              IconButton(
+                icon: const Icon(Icons.admin_panel_settings),
+                tooltip: 'Admin Panel',
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const AdminPanelScreen()),
+                ),
+              ),
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () => Navigator.push(
