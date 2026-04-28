@@ -154,9 +154,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             TextFormField(
               controller: _bioCtrl,
               maxLines: 3,
+              maxLength: 160,
               decoration: const InputDecoration(
                   labelText: 'Bio',
-                  prefixIcon: Icon(Icons.info_outlined)),
+                  prefixIcon: Icon(Icons.info_outlined),
+                  hintText: 'Tell your team about yourself...'),
             ),
           ],
         ),
