@@ -200,6 +200,21 @@ class PostCard extends StatelessWidget {
                           builder: (_) => PostDetailScreen(post: post)),
                     ),
                   ),
+                  const Spacer(),
+                  _ActionBtn(
+                    icon: Icons.share_outlined,
+                    label: 'Share',
+                    color: Colors.grey.shade500,
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Link copied to clipboard'),
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ],
