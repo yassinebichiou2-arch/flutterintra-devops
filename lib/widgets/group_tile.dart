@@ -44,7 +44,7 @@ class GroupTile extends StatelessWidget {
         title: Text(group.name,
             style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(
-          '${group.members.length} members • ${group.isPrivate ? "Private" : "Public"}',
+          '${group.members.length} member${group.members.length == 1 ? '' : 's'} • ${group.isPrivate ? "🔒 Private" : "🌐 Public"}',
           style: const TextStyle(fontSize: 12),
         ),
         trailing: onJoinLeave != null
