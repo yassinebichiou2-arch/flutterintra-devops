@@ -104,8 +104,11 @@ class _SearchScreenState extends State<SearchScreen>
                     children: [
                       Icon(Icons.search, size: 64, color: Colors.grey),
                       SizedBox(height: 12),
-                      Text('Search for users, groups or posts',
-                          style: TextStyle(color: Colors.grey)),
+                      Text('Search for users or groups',
+                          style: TextStyle(color: Colors.grey, fontSize: 15)),
+                      SizedBox(height: 4),
+                      Text('Type at least 1 character to start',
+                          style: TextStyle(color: Colors.grey, fontSize: 12)),
                     ],
                   ),
                 )
