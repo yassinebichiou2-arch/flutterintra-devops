@@ -58,7 +58,20 @@ class _GroupListScreenState extends State<GroupListScreen>
               }
               final groups = snap.data ?? [];
               if (groups.isEmpty) {
-                return const Center(child: Text('No groups yet'));
+                return const Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.group_outlined, size: 64, color: Colors.grey),
+                      SizedBox(height: 12),
+                      Text('No groups yet',
+                          style: TextStyle(color: Colors.grey, fontSize: 15)),
+                      SizedBox(height: 4),
+                      Text('Be the first to create one!',
+                          style: TextStyle(color: Colors.grey, fontSize: 12)),
+                    ],
+                  ),
+                );
               }
               return ListView.builder(
                 itemCount: groups.length,
