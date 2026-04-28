@@ -76,6 +76,22 @@ class CommentBox extends StatelessWidget {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
+                      if (comment.authorId == postAuthorId) ...[
+                        const SizedBox(width: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 1),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Text('Author',
+                              style: TextStyle(
+                                  fontSize: 9,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                      ],
                       const Spacer(),
                       Text(
                         timeago.format(comment.createdAt),
