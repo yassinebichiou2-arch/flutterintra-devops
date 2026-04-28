@@ -54,6 +54,8 @@ class UserModel {
         'createdAt': FieldValue.serverTimestamp(),
       };
 
+  bool get isAdmin => role == 'admin';
+
   UserModel copyWith({
     String? name,
     String? photoUrl,
