@@ -132,11 +132,24 @@ class _ProfileBody extends StatelessWidget {
                     ),
                   ),
                   const Divider(height: 28),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Posts',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Posts',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16)),
+                      StreamBuilder<List<PostModel>>(
+                        stream: feed.getFeedStream(),
+                        builder: (context, snap) {
+                          final count = (snap.data ?? [])
+                              .where((p) => p.authorId == user.id)
+                              .length;
+                          return Text('$count posts',
+                              style: TextStyle(
+                                  color: Colors.grey.shade500, fontSize: 13));
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
