@@ -153,6 +153,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             TextField(
               controller: _contentCtrl,
               maxLines: 6,
+              maxLength: 1000,
               decoration: const InputDecoration(
                 hintText: "What's on your mind?",
                 border: OutlineInputBorder(),
