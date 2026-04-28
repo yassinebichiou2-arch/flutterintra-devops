@@ -119,4 +119,17 @@ class PostService {
 
   Future<void> markNotificationRead(String notifId) =>
       _db.collection('notifications').doc(notifId).update({'isRead': true});
+
+  Future<void> markAllNotificationsRead(String userId) async {
+    final snap = await _db
+        .collection('notifications')
+        .where('userId', isEqualTo: userId)
+        .where('isRead', isEqualTo: false)
+        .get();
+    final batch = _db.batch();
+    for (final doc in snap.docs) {
+      batch.update(doc.reference, {'isRead': true});
+    }
+    await batch.commit();
+  }
 }

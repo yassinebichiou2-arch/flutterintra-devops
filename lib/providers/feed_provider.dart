@@ -116,5 +116,8 @@ class FeedProvider extends ChangeNotifier {
 
   Future<void> markNotificationRead(String notifId) =>
       _postService.markNotificationRead(notifId);
+
+  Future<void> markAllNotificationsRead(String userId) =>
+      _postService.markAllNotificationsRead(userId);
 }
 

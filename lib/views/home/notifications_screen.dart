@@ -41,7 +41,16 @@ class NotificationsScreen extends StatelessWidget {
     if (auth.user == null) return const SizedBox();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Notifications')),
+      appBar: AppBar(
+        title: const Text('Notifications'),
+        actions: [
+          TextButton(
+            onPressed: () => feed.markAllNotificationsRead(auth.user!.id),
+            child: const Text('Mark all read',
+                style: TextStyle(color: Colors.white, fontSize: 13)),
+          ),
+        ],
+      ),
       body: StreamBuilder<List<NotificationModel>>(
         stream: feed.getNotifications(auth.user!.id),
         builder: (context, snap) {
