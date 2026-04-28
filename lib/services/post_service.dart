@@ -132,4 +132,7 @@ class PostService {
     }
     await batch.commit();
   }
+
+  Future<void> deleteNotification(String notifId) =>
+      _db.collection('notifications').doc(notifId).delete();
 }

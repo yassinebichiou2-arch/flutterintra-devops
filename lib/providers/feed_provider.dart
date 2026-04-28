@@ -119,5 +119,8 @@ class FeedProvider extends ChangeNotifier {
 
   Future<void> markAllNotificationsRead(String userId) =>
       _postService.markAllNotificationsRead(userId);
+
+  Future<void> deleteNotification(String notifId) =>
+      _postService.deleteNotification(notifId);
 }
 

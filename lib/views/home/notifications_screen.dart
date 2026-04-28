@@ -76,23 +76,34 @@ class NotificationsScreen extends StatelessWidget {
             itemBuilder: (_, i) {
               final n = notifs[i];
               final color = _colorFor(n.type);
-              return ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: color.withValues(alpha: 0.15),
-                  child: Icon(_iconFor(n.type), color: color),
+              return Dismissible(
+                key: Key(n.id),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  color: Colors.red,
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
-                title: Text(n.title,
-                    style: TextStyle(
-                        fontWeight:
-                            n.isRead ? FontWeight.normal : FontWeight.bold)),
-                subtitle: Text(n.body),
-                trailing: Text(timeago.format(n.createdAt),
-                    style:
+                onDismissed: (_) => feed.deleteNotification(n.id),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: color.withValues(alpha: 0.15),
+                    child: Icon(_iconFor(n.type), color: color),
+                  ),
+                  title: Text(n.title,
+                      style: TextStyle(
+                          fontWeight:
+                              n.isRead ? FontWeight.normal : FontWeight.bold)),
+                  subtitle: Text(n.body),
+                  trailing: Text(timeago.format(n.createdAt),
+                      style:
                         const TextStyle(fontSize: 11, color: Colors.grey)),
-                tileColor: n.isRead
-                    ? null
-                    : Colors.blue.withValues(alpha: 0.05),
-                onTap: () => feed.markNotificationRead(n.id),
+                  tileColor: n.isRead
+                      ? null
+                      : Colors.blue.withValues(alpha: 0.05),
+                  onTap: () => feed.markNotificationRead(n.id),
+                ),
               );
             },
           );
