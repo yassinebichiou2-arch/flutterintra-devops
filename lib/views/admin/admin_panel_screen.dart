@@ -6,7 +6,6 @@ import '../../services/group_service.dart';
 import '../../models/user_model.dart';
 import '../../utils/app_theme.dart';
 import '../../widgets/user_avatar.dart';
-
 class AdminPanelScreen extends StatefulWidget {
   const AdminPanelScreen({super.key});
 
@@ -332,6 +331,13 @@ class _StatsTabState extends State<_StatsTab> {
             label: 'Admins',
             value: '1',
             color: Colors.orange,
+          ),
+          const SizedBox(height: 12),
+          _StatCard(
+            icon: Icons.people_alt_rounded,
+            label: 'Employees',
+            value: '${_userCount > 0 ? _userCount - 1 : 0}',
+            color: AppTheme.info,
           ),
         ],
       ),
