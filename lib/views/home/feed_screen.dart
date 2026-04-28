@@ -52,7 +52,10 @@ class FeedScreen extends StatelessWidget {
                   Icon(Icons.article_outlined, size: 64, color: Colors.grey),
                   SizedBox(height: 12),
                   Text('No posts yet. Be the first!',
-                      style: TextStyle(color: Colors.grey)),
+                      style: TextStyle(color: Colors.grey, fontSize: 15)),
+                  SizedBox(height: 6),
+                  Text('Tap + to share something with your team',
+                      style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ],
               ),
             );
