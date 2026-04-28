@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FlutterIntra
 
 A new Flutter project.
@@ -15,3 +16,7 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+=======
+# flutterintra-devops
+Application Flutter DevOps - CI/CD Pipeline avec Kubernetes &amp; ArgoCD
+>>>>>>> 6586c13b2c4cb863376ff605756cd771ebac915d
