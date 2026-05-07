@@ -40,15 +40,15 @@ class _MainShellState extends State<MainShell> {
         destinations: [
           const NavigationDestination(
               icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
+              selectedIcon: Icon(Icons.home_rounded),
               label: 'Feed'),
           const NavigationDestination(
               icon: Icon(Icons.group_outlined),
-              selectedIcon: Icon(Icons.group),
+              selectedIcon: Icon(Icons.group_rounded),
               label: 'Groups'),
           const NavigationDestination(
-              icon: Icon(Icons.chat_bubble_outline),
-              selectedIcon: Icon(Icons.chat_bubble),
+              icon: Icon(Icons.chat_bubble_outline_rounded),
+              selectedIcon: Icon(Icons.chat_bubble_rounded),
               label: 'Messages'),
           NavigationDestination(
             icon: StreamBuilder<List<NotificationModel>>(
