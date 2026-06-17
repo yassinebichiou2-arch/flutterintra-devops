@@ -74,7 +74,7 @@ class ChatBubble extends StatelessWidget {
                 ),
                 if (isMe) ...[
                   const SizedBox(width: 4),
-                  Icon(Icons.done_all,
+                  const Icon(Icons.done_all,
                       size: 12,
                       color: Colors.white60),
                 ],
