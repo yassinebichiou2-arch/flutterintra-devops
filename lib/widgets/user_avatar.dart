@@ -23,6 +23,8 @@ class UserAvatar extends StatelessWidget {
       const Color(0xFFDC2626),
       const Color(0xFFD97706),
       const Color(0xFF0891B2),
+      const Color(0xFFDB2777),
+      const Color(0xFF65A30D),
     ];
     return colors[name.codeUnitAt(0) % colors.length];
   }
