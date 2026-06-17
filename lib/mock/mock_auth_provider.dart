@@ -6,14 +6,17 @@ class MockAuthProvider extends AppAuthProvider {
   @override
   Future<bool> signIn({required String email, required String password}) async {
     setLoadingPublic(true);
+    setErrorPublic(null);
     await Future.delayed(const Duration(milliseconds: 800));
-    final found = mockUsers.where((u) => u.email == email).toList();
+    final found = mockUsers.where(
+      (u) => u.email.toLowerCase() == email.toLowerCase(),
+    ).toList();
     if (found.isNotEmpty && password.length >= 6) {
       setUserPublic(found.first);
       setLoadingPublic(false);
       return true;
     }
-    setErrorPublic('Use alice@FlutterIntra.com / 123456');
+    setErrorPublic('Invalid email or password. Try alice@FlutterIntra.com / 123456');
     setLoadingPublic(false);
     return false;
   }
