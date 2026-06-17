@@ -18,18 +18,25 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.0'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code (lint)
         run: flutter analyze
 
       - name: Run tests
-        run: flutter test
+        run: flutter test --coverage
 
       - name: Build Flutter Web
         run: flutter build web --release
 
       - name: Build Docker image
         run: docker build -t flutterintra:latest .
+
+      - name: Tag Docker image with commit SHA
+        run: docker tag flutterintra:latest flutterintra:${{ github.sha }}
