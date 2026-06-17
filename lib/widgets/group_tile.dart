@@ -50,7 +50,11 @@ class GroupTile extends StatelessWidget {
         trailing: onJoinLeave != null
             ? TextButton(
                 onPressed: onJoinLeave,
-                child: Text(isMember ? 'Leave' : 'Join'),
+                style: TextButton.styleFrom(
+                  foregroundColor: isMember ? Colors.red : Theme.of(context).colorScheme.primary,
+                ),
+                child: Text(isMember ? 'Leave' : 'Join',
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
               )
             : null,
       ),
