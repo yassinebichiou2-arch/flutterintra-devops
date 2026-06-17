@@ -10,6 +10,12 @@ class AppTheme {
   static const Color error = Color(0xFFEF4444);
   static const Color info = Color(0xFF06B6D4);
 
+  // Semantic colors
+  static const Color textPrimary = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF64748B);
+  static const Color textDisabled = Color(0xFF94A3B8);
+  static const Color online = Color(0xFF22C55E);
+
   // Gradient
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primary, accent],
