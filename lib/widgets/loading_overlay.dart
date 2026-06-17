@@ -21,14 +21,21 @@ class LoadingOverlay extends StatelessWidget {
         if (isLoading)
           Positioned.fill(
             child: ColoredBox(
-              color: Colors.black38,
+              color: Colors.black45,
               child: Center(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 20),
+                      horizontal: 28, vertical: 24),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
+                    color: Theme.of(context).cardTheme.color ?? Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -36,7 +43,7 @@ class LoadingOverlay extends StatelessWidget {
                       const CircularProgressIndicator(
                           color: AppTheme.primary),
                       if (message != null) ...[
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 14),
                         Text(message!,
                             style: const TextStyle(
                                 fontSize: 13, color: Colors.black87)),
