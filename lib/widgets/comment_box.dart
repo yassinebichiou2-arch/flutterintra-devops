@@ -100,8 +100,9 @@ class CommentBox extends StatelessWidget {
                       ),
                       if (canDelete) ...[
                         const SizedBox(width: 6),
-                        GestureDetector(
+                        InkWell(
                           onTap: () => _confirmDelete(context, feed),
+                          borderRadius: BorderRadius.circular(4),
                           child: Container(
                             padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
